@@ -13,6 +13,7 @@ PREREQUISITES
 - pycaw
 - comtypes
 - Basic familiarity with Unity / avatar parameters / OSC
+
 SETUP / USAGE
 
 1. Enable OSC in VRChat - In VRChat settings, enable OSC so parameter changes are sent locally.
