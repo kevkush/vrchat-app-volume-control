@@ -86,15 +86,16 @@ class VolumeController:
 
         return None
 
-    def set_volume(self, process_name: str, volume_percent: int) -> None:
+    def set_volume(self, process_name: str, volume_percent: int) -> bool:
         session = self._get_session(process_name)
         if not session:
-            return
+            return False
 
         session.SimpleAudioVolume.SetMasterVolume(
             volume_percent / 100.0,
             None
         )
+        return True
 
     # OSC decoding
     def handle_osc(self, address: str, *args):
@@ -121,10 +122,9 @@ class VolumeController:
                         continue
 
                     process_name = PARAM_MAP[param]["process"]
-                    self.set_volume(process_name, value)
-
-                    self.last_applied_values[param] = value
-                    log(f"{process_name} → {value}%")
+                    if self.set_volume(process_name, value):
+                        self.last_applied_values[param] = value
+                        log(f"{process_name} → {value}%")
 
                 time.sleep(SEND_INTERVAL)
 
