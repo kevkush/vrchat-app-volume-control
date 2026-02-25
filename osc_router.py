@@ -142,7 +142,7 @@ def main():
     disp.map("/*", controller.handle_osc)
 
     server = osc_server.ThreadingOSCUDPServer(
-        ("0.0.0.0", VRCHAT_PORT),
+        ("127.0.0.1", VRCHAT_PORT),
         disp
     )
 
@@ -154,4 +154,5 @@ def main():
     server.serve_forever()
 
 if __name__ == "__main__":
+
     main()
