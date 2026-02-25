@@ -1,7 +1,7 @@
 
 # ===============================================================
 # VRChat OSC → Per-Application Volume Controller
-# v0.1
+# v0.2
 # 
 # Listens for pre-mapped OSC parameters from VRChat and maps them
 # to per app volume control
@@ -156,3 +156,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
