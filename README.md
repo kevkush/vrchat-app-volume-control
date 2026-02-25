@@ -1,15 +1,39 @@
-# vrchat-app-volume-control
+Don’t want to pull up your desktop overlay just to turn down the YouTube set blasting in the background? Don’t feel like digging for Spotify’s volume slider? Is the VRChat audio menu too buried mid-session?
 
-Don't wanna pull up your overlay to turn down the crazy EDC set you're listening to on youtube? Can't be bothered to click that little Spotify volume control? Vrchat audio menu too slow to access?
+This allows you to control per-application volume directly from inside VRChat using your Expressions menu.
 
-Now you can control any process' volume from inside VRChat, in your expressions menu! Just map the control of an unused/blank float parameter to a process name using this script, and the per-app volume control will be set accordingly. It's a little python script that sits and listens for VRChat's OSC to spit out those specifically named float parameters and changes app volume. It even strips out VRCFury parameter renaming prefixes (optional) if thats something you use. Recommended to use VRCFury to create the component, and their built in parameter compressor (thanks sent) to save parameter space.
+A lightweight Python script listens for specific float parameters sent via VRChat’s OSC system and maps them to Windows processes. When the parameter value changes in-game, the corresponding application's volume updates in real time.
 
-PREREQUISITES: python, python-osc, pycaw, comtypes
+You can map any unused float parameter to any running process (e.g. chrome.exe, vrchat.exe, spotify.exe, etc.). Script can optionally strip VRCFury’s parameter renaming prefix if used on avatar (defaults to on)
 
-USAGE:
+PREREQUISITES
 
-create an actionless float parameter in VRC controlled w/ radial (recommended to use VRCfury as shown in the screenshots to make this easy)
-map the same parameter name to a process in the top of the script
-volume control go brrrr
+- Python 3.x
+- python-osc
+- pycaw
+- comtypes
+- Basic familiarity with Unity / avatar parameters / OSC
+SETUP / USAGE
 
-Script assumes a smol amount of python/OSC/unity capability - use, modify, enjoy!
+1. Enable OSC in VRChat - In VRChat settings, enable OSC so parameter changes are sent locally.
+2. Create a float parameter with a unique name
+- Create an unused float parameter in your avatar (example: ChromeVolume).
+- Add a radial control in your Expressions menu that drives this parameter.
+- Recommended: use VRCFury to quickly create the radial control, as shown in the screenshots.
+
+3. Match the parameter name(s) in the script
+At the top of the script, edit the PARAM_MAP dictionary to match your avatar parameters to the processes you want to control. Example:
+
+"ChromeVolume": {"process": "chrome.exe"},
+
+- The key must exactly match your avatar’s float parameter name.
+- The process value must match the running Windows process name.
+- You can add new parameters/apps as you need
+
+4. Run Script - Launch while VRChat is running - When you adjust the radial in-game, the target application's volume will change. The console will display registered apps and volume changes.
+
+NOTES
+
+- The script adjusts the master session volume for the selected process.
+- Target applications must already be running for volume changes to apply.
+- If multiple instances of a process are running, all matching sessions will be adjusted.
